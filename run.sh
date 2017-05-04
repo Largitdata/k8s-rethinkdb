@@ -11,6 +11,10 @@ POD_NAME=${POD_NAME:-"NO_POD_NAME"}
 SERVER_TAGS=${SERVER_TAGS:-""}
 SERVER_TAGS_STR=`echo $SERVER_TAGS|awk -F, '{for(i=1;i<=NF;++i) printf("--server-tag %s ",$i)}'`
 
+# Host/Node IP
+HOST_IP=${HOST_IP:-$POD_IP}
+HOST_CLUSTER_PORT=${HOST_CLUSTER_PORT:-30001}
+
 # Transform - to _ to comply with requirements
 SERVER_NAME=$(echo ${POD_NAME} | sed 's/-/_/g')
 
@@ -69,6 +73,7 @@ if [[ -n "${PROXY}" ]]; then
   exec rethinkdb \
     proxy \
     --canonical-address ${POD_IP} \
+    --canonical-address ${HOST_IP}:${HOST_CLUSTER_PORT} \
     --bind all \
     ${JOIN_ENDPOINTS} \
     ${@}
