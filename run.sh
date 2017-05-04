@@ -82,6 +82,7 @@ else
   exec rethinkdb \
     --server-name ${SERVER_NAME} \
     --canonical-address ${POD_IP} \
+    --canonical-address ${HOST_IP}:${HOST_CLUSTER_PORT} \
     --bind all \
     ${JOIN_ENDPOINTS} \
     ${SERVER_TAGS_STR} \
